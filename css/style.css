@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+body {
+    background: linear-gradient(#FFFFFF, #00B3EC);
+    /* Text de couleur #3900EC, 1,3 fois taille normal et en gras */
+    font-color : #3900EC;
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family: 'Righteous', cursive;
+}
+
+.enTete {
+    background-color: #00b3ed;
+}
+
+h1 {
+    color: #3900EC;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
+
+.cell {
+    background: linear-gradient(#00B3EC, #FFFFFF);
+    margin: 2px;
+    padding: 5px;
+}

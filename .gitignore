@@ -24,4 +24,8 @@ hs_err_pid*
 replay_pid*
 
 # Fichier très lourd
-RessourcesTP1/
+img/
+framework/
+
+# IntelliJ project files
+.idea/

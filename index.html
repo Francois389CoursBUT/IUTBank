@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Feuille de style -->
+    <link rel="stylesheet" href="css/style.css"/>
+    <!-- Feuille de style bootstrap -->
+    <link rel="stylesheet" href="framework/bootstrap-4.6.2-dist/css/bootstrap.css"/>
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="framework/fontawesome-free-6.2.1-web/css/all.css"/>
+    <script defer src="framework/fontawesome-free-6.2.1-web/js/all.js" ></script>
+    <title>IUT Bank</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <!-- En-tête -->
+        <div class="col-3 enTete">
+            <img src="img/Logo.jpg" alt="Logo du site"/>
+        </div>
+        <div class="col-9 enTete">
+            <h1>Ma Banque en ligne</h1>
+            <h1>IUT BANK ONLINE</h1>
+        </div>
+        <!-- Message de bienvenue -->
+        <div class="col-12 cell">
+            <h1>-- Bienvenue sur le site de l'IUT BANK--</h1>
+            <h2>VOus pourrez gr&acirc;ce &ccedil; cette interface voir les d&eacute;tail de vos comptes
+                et faire toutes vos o&agrave;&eacute;rations &agrave; distance</h2>
+        </div>
+        <!-- Formulaire de connexion -->
+        <div class="col-12 cell">
+            <form action="connexion.php" method="post">
+            <div class="row">
+                <div class="col-6">Identifiant :</div>
+                <div class="col-6">Mot de passe :</div>
+
+                <div class="col-6">
+                    <input name="identifiant" placeholder="Tapez votre numéro de compte">
+                </div>
+                <div class="col-6">
+                    <input name="mdp" placeholder="Tapez votre mot de passe">
+                </div>
+                <div class="col-12"><div class="btn">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div></div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

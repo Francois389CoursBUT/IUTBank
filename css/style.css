@@ -37,6 +37,19 @@ p {
     margin-bottom: 0;
 }
 
+label {
+    margin-bottom: 0 !important;
+}
+
+/* Largeur supérieur à 767px */
+@media screen and (min-width: 767px) {
+    .logoSite {
+        width: 100%;
+        height: auto;
+        vertical-align: center;
+    }
+}
+
 .cell {
     background: linear-gradient(#FFFFFF, #00B3EC);
     margin: 2px;
@@ -73,7 +86,10 @@ p {
     vertical-align: center;
 }
 
-.logoIUT:hover {
-    width: 120px;
-    height: auto;
+img:hover {
+    transform: scale(1.2);
+}
+
+.noir {
+    color: black;
 }

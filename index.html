@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-md-4 col-sm-12 enTete">
-                    <p><img src="img/Logo.jpg" alt="Logo du site"/></p>
+                    <p><img src="img/Logo.jpg" alt="Logo du site" class="logoSite"/></p>
                 </div>
                 <div class="col-md-8 col-sm-12 enTete">
                     <h1>Ma Banque en ligne</h1>
@@ -37,13 +37,21 @@
         <div class="col-12 cell">
             <form action="connexion.php" method="post">
             <div class="row">
-                <div class="col-6 labelInputDiv"><label for="identifiant">Identifiant :</label></div>
-                <div class="col-6 labelInputDiv"><label for="mdp">Mot de passe :</label></div>
+                <div class="col-md-6 col-sm-12 order-sm-1 labelInputDiv">
+                    <label for="identifiant">Identifiant :</label>
+                </div>
+                <div class="col-md-6 col-sm-12 order-sm-3 labelInputDiv">
+                    <label for="mdp">Mot de passe :</label>
+                </div>
 
-                <div class="col-6"><input class="form-control inputPlaceholder" name="identifiant" id="identifiant" placeholder="Tapez votre numéro de compte"></div>
-                <div class="col-6"><input class="form-control inputPlaceholder" name="mdp" id="mdp" placeholder="Tapez votre mot de passe"></div>
+                <div class="col-md-6 col-sm-12 order-sm-2">
+                    <input class="form-control inputPlaceholder" name="identifiant" id="identifiant" placeholder="Tapez votre numéro de compte">
+                </div>
+                <div class="col-md-6 col-sm-12 order-sm-4">
+                    <input class="form-control inputPlaceholder" name="mdp" id="mdp" placeholder="Tapez votre mot de passe">
+                </div>
 
-                <div class="col-12">
+                <div class="col-12 order-sm-5">
                     <div class="btn btn-block btn-primary boutonTexte">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div>
                 </div>
             </div>

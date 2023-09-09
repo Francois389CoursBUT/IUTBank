@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 body {
-    background: linear-gradient(#FFFFFF, #00B3EC);
+    background: linear-gradient(#FFFFFF, #00B3EC) fixed ;
     /* Text de couleur #3900EC, 1,3 fois taille normal et en gras */
     font-color : #3900EC;
     font-size: 1.3em;
@@ -16,13 +16,64 @@ body {
 h1 {
     color: #3900EC;
     font-size: 2em;
+    font-weight:bold !important;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
+
+h2 {
+    color: #3900EC;
+    font-size: 1.5em;
     font-weight: bold;
     text-align: center;
     font-family: 'Righteous', cursive;
 }
 
+p {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+    margin-bottom: 0;
+}
+
 .cell {
-    background: linear-gradient(#00B3EC, #FFFFFF);
+    background: linear-gradient(#FFFFFF, #00B3EC);
     margin: 2px;
     padding: 5px;
+}
+
+.centrer {
+    text-align: center;
+}
+
+.labelInputDiv {
+    text-align: center;
+    color: #3900EC;
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family: 'Righteous', cursive;
+}
+
+.inputPlaceholder, .boutonTexte {
+    font-family: 'Righteous', cursive;
+}
+
+.divBoutonContacter {
+    vertical-align: middle;
+}
+
+.textLogo {
+    margin-bottom: 0;
+}
+
+.logoIUT {
+    width: 100px;
+    height: auto;
+    vertical-align: center;
+}
+
+.logoIUT:hover {
+    width: 120px;
+    height: auto;
 }

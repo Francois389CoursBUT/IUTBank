@@ -15,36 +15,60 @@
 <div class="container">
     <div class="row">
         <!-- En-tête -->
-        <div class="col-3 enTete">
-            <img src="img/Logo.jpg" alt="Logo du site"/>
-        </div>
-        <div class="col-9 enTete">
-            <h1>Ma Banque en ligne</h1>
-            <h1>IUT BANK ONLINE</h1>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 enTete">
+                    <p><img src="img/Logo.jpg" alt="Logo du site"/></p>
+                </div>
+                <div class="col-md-8 col-sm-12 enTete">
+                    <h1>Ma Banque en ligne</h1>
+                    <h1>IUT BANK ONLINE</h1>
+                </div>
+            </div>
         </div>
         <!-- Message de bienvenue -->
         <div class="col-12 cell">
-            <h1>-- Bienvenue sur le site de l'IUT BANK--</h1>
-            <h2>VOus pourrez gr&acirc;ce &ccedil; cette interface voir les d&eacute;tail de vos comptes
-                et faire toutes vos o&agrave;&eacute;rations &agrave; distance</h2>
+            <h1>-- Bienvenue sur le site de l'IUT BANK --</h1>
+            <h2>Vous pourrez gr&acirc;ce &agrave; cette interface voir les d&eacute;tails de vos comptes
+                et faire toutes vos orations distance</h2>
         </div>
+
         <!-- Formulaire de connexion -->
         <div class="col-12 cell">
             <form action="connexion.php" method="post">
             <div class="row">
-                <div class="col-6">Identifiant :</div>
-                <div class="col-6">Mot de passe :</div>
+                <div class="col-6 labelInputDiv"><label for="identifiant">Identifiant :</label></div>
+                <div class="col-6 labelInputDiv"><label for="mdp">Mot de passe :</label></div>
 
-                <div class="col-6">
-                    <input name="identifiant" placeholder="Tapez votre numéro de compte">
+                <div class="col-6"><input class="form-control inputPlaceholder" name="identifiant" id="identifiant" placeholder="Tapez votre numéro de compte"></div>
+                <div class="col-6"><input class="form-control inputPlaceholder" name="mdp" id="mdp" placeholder="Tapez votre mot de passe"></div>
+
+                <div class="col-12">
+                    <div class="btn btn-block btn-primary boutonTexte">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div>
                 </div>
-                <div class="col-6">
-                    <input name="mdp" placeholder="Tapez votre mot de passe">
-                </div>
-                <div class="col-12"><div class="btn">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div></div>
             </div>
             </form>
         </div>
+
+        <!-- Footer -->
+        <div class="col-12 cell cell-footer">
+            <div class="row">
+                <div class="col-3 divBoutonContacter">
+                    <p class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></p>
+                </div>
+
+                <div class="col-6"></div> <!-- Vide pour centrer -->
+
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-12"><p class="textLogo">Réaliser par</p></div>
+                        <div class="col-12 centrer"><img class="logoIUT" src="img/LogoIut.png" alt="Le logo de l'IUT de Rodez"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 

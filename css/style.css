@@ -23,8 +23,8 @@ h1 {
 
 h2 {
     color: #3900EC;
-    font-size: 1.5em;
-    font-weight: bold;
+    font-size: 1.5em !important;
+    font-weight: bold !important;
     text-align: center;
     font-family: 'Righteous', cursive;
 }
@@ -41,13 +41,21 @@ label {
     margin-bottom: 0 !important;
 }
 
-/* Largeur supérieur à 767px */
-@media screen and (min-width: 767px) {
-    .logoSite {
-        width: 100%;
-        height: auto;
-        vertical-align: center;
-    }
+a {
+    color :#AF00EC
+}
+
+a:hover {
+    color :#EC00B3
+}
+
+/*logoSite: Centré, marge intérieure 5 px, hauteur 120px, image arrondie 5px dans les angles*/
+.logoSite {
+    display: block;
+    margin: 5px auto;
+    padding: 5px;
+    height: 120px;
+    border-radius: 5px;
 }
 
 .cell {
@@ -56,12 +64,16 @@ label {
     padding: 5px;
 }
 
-.centrer {
-    text-align: center;
+.centrerVerticalement {
+    display: flex;
+    align-items: center;
+}
+
+.centrerHorizontalement {
+    text-align: center !important;
 }
 
 .labelInputDiv {
-    text-align: center;
     color: #3900EC;
     font-size: 1.3em;
     font-weight: bold;
@@ -70,10 +82,6 @@ label {
 
 .inputPlaceholder, .boutonTexte {
     font-family: 'Righteous', cursive;
-}
-
-.divBoutonContacter {
-    vertical-align: middle;
 }
 
 .textLogo {
@@ -92,4 +100,17 @@ img:hover {
 
 .noir {
     color: black;
+}
+
+.imageCompte {
+    width: 100%;
+}
+
+
+.negatif {
+    color: red;
+}
+
+.positif {
+    color: green;
 }

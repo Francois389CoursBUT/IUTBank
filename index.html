@@ -37,22 +37,19 @@
         <div class="col-12 cell">
             <form action="connexion.php" method="post">
             <div class="row">
-                <div class="col-md-6 col-sm-12 order-sm-1 labelInputDiv">
+                <div class="col-md-6 col-sm-12 order-md-1 order-sm-1 order-xs-1 labelInputDiv centrerHorizontalement">
                     <label for="identifiant">Identifiant :</label>
-                </div>
-                <div class="col-md-6 col-sm-12 order-sm-3 labelInputDiv">
-                    <label for="mdp">Mot de passe :</label>
-                </div>
-
-                <div class="col-md-6 col-sm-12 order-sm-2">
                     <input class="form-control inputPlaceholder" name="identifiant" id="identifiant" placeholder="Tapez votre numéro de compte">
                 </div>
-                <div class="col-md-6 col-sm-12 order-sm-4">
+                <div class="col-md-6 col-sm-12 order-md-2 order-sm-3 order-xs-3 labelInputDiv centrerHorizontalement">
+                    <label for="mdp">Mot de passe :</label>
                     <input class="form-control inputPlaceholder" name="mdp" id="mdp" placeholder="Tapez votre mot de passe">
                 </div>
 
-                <div class="col-12 order-sm-5">
-                    <div class="btn btn-block btn-primary boutonTexte">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div>
+                <div class="col-12 order-sm-5 order-md-5 order-xs-5">
+                    <a href="pages/compte1.html">
+                        <div class="btn btn-block btn-primary boutonTexte">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div>
+                    </a>
                 </div>
             </div>
             </form>
@@ -61,8 +58,8 @@
         <!-- Footer -->
         <div class="col-12 cell cell-footer">
             <div class="row">
-                <div class="col-3 divBoutonContacter">
-                    <p class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></p>
+                <div class="col-3 centrerVerticalement">
+                    <a href="pages/contact.html"><div class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></div></a>
                 </div>
 
                 <div class="col-6"></div> <!-- Vide pour centrer -->
@@ -70,7 +67,7 @@
                 <div class="col-3">
                     <div class="row">
                         <div class="col-12"><p class="textLogo">Réaliser par</p></div>
-                        <div class="col-12 centrer"><img class="logoIUT" src="img/LogoIut.png" alt="Le logo de l'IUT de Rodez"></div>
+                        <div class="col-12 centrerHorizontalement"><img class="logoIUT" src="img/LogoIut.png" alt="Le logo de l'IUT de Rodez"></div>
                     </div>
                 </div>
             </div>

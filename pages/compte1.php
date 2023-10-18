@@ -8,10 +8,41 @@
     <link rel="stylesheet" href="../framework/bootstrap-4.6.2-dist/css/bootstrap.css"/>
     <!-- fontawesome -->
     <link rel="stylesheet" href="../framework/fontawesome-free-6.2.1-web/css/all.css"/>
-    <script defer src="../framework/fontawesome-free-6.2.1-web/js/all.js" ></script>
+    <script defer src="../framework/fontawesome-free-6.2.1-web/js/all.js"></script>
     <title>IUT Bank - Détails du compte</title>
 </head>
 <body>
+<?php
+
+/**
+ * @return array
+ * @throws Exception
+ */
+function getTabFromFile($chemin)
+{
+    $nomFichierTypes = $chemin;
+    if (!file_exists($nomFichierTypes)) throw new Exception('Fichier ' . $nomFichierTypes . ' non trouvé.');
+
+    $tabTypes = file($nomFichierTypes, FILE_IGNORE_NEW_LINES);
+    $i = 0;
+    foreach ($tabTypes as $ligne) {
+        $tab[$i] = explode(";", $ligne);
+        $i++;
+    }
+    return $tab;
+}
+
+try{
+$tabEcriture = getTabFromFile("../FichiersDonnees/Ecritures.csv");
+$tabTypeEcriture = getTabFromFile("../FichiersDonnees/TypeEcritures.csv");
+
+$i = 0;
+foreach ($tabTypeEcriture as $ligne) {
+    $tabCodeType[$i] = $ligne[0];
+    $i++;
+}
+$typeFiltre = isset($_GET['type']) && in_array($_GET['type'], $tabCodeType) ? $_GET['type'] : "Tous";
+?>
 <div class="container">
     <div class="row">
 
@@ -50,7 +81,65 @@
         </div>
 
         <!-- Liste transaction -->
-        <table
+        <div class="col-12 cell">
+            <form action="compte1.php" method="get">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Date</th>
+                        <th>
+                            Type</br>
+                            <select name="type" id="type">
+
+                                <?php
+                                echo '<option value="Tous">Tous</option>';
+                                foreach ($tabTypeEcriture as $ligne) {
+                                    if ($ligne != $tabTypeEcriture[0]) {
+                                        echo '<option value="' . $ligne[0] . '" ';
+                                        if ($ligne[0] == $typeFiltre) echo 'selected';
+                                        echo '>' . $ligne[1] . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <input class="btn btn-primary" type="submit" value="Filtrer">
+                        </th>
+                        <th>Libell&eacute;</th>
+                        <th>D&eacute;bit</th>
+                        <th>Cr&eacute;dit</th>
+                        <th>Solde</th>
+                    </tr>
+                    <?php
+                    $solde = 0;
+                    foreach ($tabEcriture as $ligne) {
+                        if ($ligne != $tabEcriture[0] && ($typeFiltre == "Tous" || $typeFiltre == $ligne[1])) {
+                            $solde += $ligne[4] - $ligne[3];
+                            echo '<tr>';
+                            echo '<td>' . $ligne[0] . '</td>'; //Date
+                            echo '<td>' . $ligne[1] . '</td>'; //Type
+                            echo '<td>' . $ligne[2] . '</td>'; //Libellé
+                            echo '<td class="negatif">' . $ligne[3] . '</td>'; //Débit
+                            echo '<td class="positif">' . $ligne[4] . '</td>'; //Crédit
+                            echo '<td class="';
+                            echo $solde < 0 ? "negatif" : "positif";
+                            echo '">' . $solde . '</td>';
+                            echo '</tr>';
+                        }
+                    }
+                    ?>
+                </table>
+            </form>
+        </div>
+        <?php
+        } catch (Exception $e) {
+            // Affichage message d'erreur
+            echo '<div class="alert alert-info" role="alert">';
+            echo '<h2>Maintenance</h2>';
+            //DEBUG echo '<p>' . $e->getMessage() . '</p>';
+            echo '<p>La base de donnée est cours de maintenance.</p>';
+            echo '<p>Nous Nous excusons pour la géne occasionner</p>';
+            echo '</div>';
+        }
+        ?>
     </div>
 </div>
 

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../framework/fontawesome-free-6.2.1-web/css/all.css"/>
     <script defer src="../framework/fontawesome-free-6.2.1-web/js/all.js" ></script>
     <script defer src="../framework/bootstrap-4.6.2-dist/js/bootstrap.js"></script>
-    <title>IUT Bank - Nous contacter</title>
+    <title>IUT Bank - Liste des comptes</title>
 </head>
 <body>
 <div class="container">
@@ -102,7 +102,7 @@
             <div class="row">
                 <!-- Nous contacter -->
                 <div class="col-3 centrerVerticalement">
-                    <a href="contact.html"><div class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></div></a>
+                    <a href="contact.php"><div class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></div></a>
                 </div>
 
                 <!-- Vide pour centrer -->
@@ -110,7 +110,7 @@
 
                 <!-- Bouton déconnexion -->
                 <div class="col-3 centrerVerticalement">
-                    <a href="../index.html">
+                    <a href="../index.php">
                         <div class="btn btn-danger btn-block boutonTexte">D&eacute;connexion <i class="fa-solid fa-circle-xmark"></i></div>
                     </a>
                 </div>

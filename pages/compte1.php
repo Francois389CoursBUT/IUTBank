@@ -9,7 +9,7 @@
     <!-- fontawesome -->
     <link rel="stylesheet" href="../framework/fontawesome-free-6.2.1-web/css/all.css"/>
     <script defer src="../framework/fontawesome-free-6.2.1-web/js/all.js" ></script>
-    <title>IUT Bank - Liste des comptes</title>
+    <title>IUT Bank - Détails du compte</title>
 </head>
 <body>
 <div class="container">

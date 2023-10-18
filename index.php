@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="col-12 order-sm-5 order-md-5 order-xs-5">
-                    <a href="pages/compte1.html">
+                    <a href="pages/compte1.php">
                         <div class="btn btn-block btn-primary boutonTexte">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div>
                     </a>
                 </div>
@@ -59,7 +59,7 @@
         <div class="col-12 cell cell-footer">
             <div class="row">
                 <div class="col-3 centrerVerticalement">
-                    <a href="pages/contact.html"><div class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></div></a>
+                    <a href="pages/contact.php"><div class="btn btn-primary btn-block boutonTexte">Nous contacter <i class="fa-solid fa-envelope"></i></div></a>
                 </div>
 
                 <div class="col-6"></div> <!-- Vide pour centrer -->

@@ -79,7 +79,7 @@
                 <div class="col-7"></div>
 
                 <div class="col-3 centrerVerticalement">
-                    <a href="../index.html">
+                    <a href="../index.php">
                         <div class="btn btn-danger btn-block boutonTexte">Acceuil <i class="fa-solid fa-eject"></i></div>
                     </a>
                 </div>

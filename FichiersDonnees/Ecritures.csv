@@ -1,0 +1,14 @@
+﻿Date;Libellé;Type;Debit;credit
+01/09/2023;SI;Solde début de mois;;1000
+03/09/2023;PR;Prélèvement Loyer;250;
+03/09/2023;VIR;Salaire Août;;653
+03/09/2023;RE;Retrait Banque postale;15;
+04/09/2023;CB;MC Donald;12;
+05/09/2023;VIR;Versement APL;;50.45
+09/09/2023;CH;Paiement réparation voiture;950;
+10/09/2023;CH;Chèque Super U;47.40;
+15/09/2023;CB;Leclerc;35.60;
+18/09/2023;CB;Kebab Miam;5.5;
+20/09/2023;PR;Mutuelle;35;
+20/09/2023;RE;Retrait Crédit Agricole;25;
+23/09/2023;CB;Essence Total;47;

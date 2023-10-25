@@ -33,10 +33,19 @@
         return $tab;
     }
 
+    function tabToAssoc(array $tabTypeEcriture)
+    {
+        $tabTypeEcritureAssco = array();
+        foreach ($tabTypeEcriture as $ligne) {
+            $tabTypeEcritureAssco[$ligne[0]] = $ligne[1];
+        }
+        return $tabTypeEcritureAssco;
+    }
+
     try {
         $tabEcriture = getTabFromFile("../FichiersDonnees/Ecritures.csv");
         $tabTypeEcriture = getTabFromFile("../FichiersDonnees/TypeEcritures.csv");
-
+        $tabTypeEcritureAssoc = tabToAssoc($tabTypeEcriture);
         $i = 0;
         foreach ($tabTypeEcriture as $ligne) {
             $tabCodeType[$i] = $ligne[0];
@@ -116,12 +125,15 @@
                             </tr>
                             <?php
                             $solde = 0;
+                            var_dump($tabEcriture);
+                            $resultat = ''-2;
+                            var_dump($resultat);
                             foreach ($tabEcriture as $ligne) {
                                 if ($ligne != $tabEcriture[0] && ($typeFiltre == "Tous" || $typeFiltre == $ligne[1])) {
                                     $solde += $ligne[4] - $ligne[3]; //Crédit
                                     echo '<tr>';
                                     echo '<td>' . $ligne[0] . '</td>'; //Date
-                                    echo '<td>' . $ligne[1] . '</td>'; //Type
+                                    echo '<td>' . $tabTypeEcritureAssoc[$ligne[1]] . '</td>'; //Type
                                     echo '<td>' . $ligne[2] . '</td>'; //Libellé
                                     echo '<td class="negatif">' . $ligne[3] . '</td>'; //Débit
                                     echo '<td class="positif">' . $ligne[4] . '</td>'; //Crédit

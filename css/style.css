@@ -49,6 +49,13 @@ a:hover {
     color :#EC00B3
 }
 
+table {
+    width: 100%;
+    font-weight: bolder;
+    font-family: 'Righteous', cursive;
+    font-size: 1.3em;
+}
+
 /*logoSite: Centré, marge intérieure 5 px, hauteur 120px, image arrondie 5px dans les angles*/
 .logoSite {
     display: block;

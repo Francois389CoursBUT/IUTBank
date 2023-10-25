@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="col-12 order-sm-5 order-md-5 order-xs-5">
-                    <a href="pages/compte1.php">
+                    <a href="pages/comptes.php">
                         <div class="btn btn-block btn-primary boutonTexte">Me connecter <i class="fa-solid fa-right-to-bracket"></i></div>
                     </a>
                 </div>

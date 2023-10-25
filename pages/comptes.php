@@ -15,10 +15,11 @@
     <body>
     <?php
     /**
+     * @param $chemin string
      * @return array
      * @throws Exception
      */
-    function getTabFromFile($chemin)
+    function getTabFromFile(string $chemin) : array
     {
         $nomFichierTypes = $chemin;
         if (!file_exists($nomFichierTypes)) throw new Exception('Fichier ' . $nomFichierTypes . ' non trouvé.');
@@ -85,7 +86,10 @@
                         <?php
                         $solde = 0;
                         foreach ($tabEcriture as $ligne) {
-                            $solde += $ligne[4] - $ligne[3];
+                            if ($ligne != $tabEcriture[0]) {
+                                if ($ligne[3] != '') $solde -= $ligne[3];
+                                if ($ligne[4] != '') $solde += $ligne[4];
+                            }
                         }
                         echo '<p class="solde ';
                                         echo $solde < 0 ? "negatif" : "positif";
@@ -172,8 +176,8 @@
         echo '<div class="alert alert-info" role="alert">';
         echo '<h2>Maintenance</h2>';
         //DEBUG echo '<p>' . $e->getMessage() . '</p>';
-        echo '<p>La base de donnée est cours de maintenance.</p>';
-        echo '<p>Nous nous excusons pour la géne occasionner</p>';
+        echo '<p>La base de donn&eacute;e est cours de maintenance.</p>';
+        echo '<p>Nous nous excusons pour la g&eacute;ne occasionner</p>';
         echo '</div>';
     }
     ?>

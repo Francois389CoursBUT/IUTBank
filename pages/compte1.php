@@ -15,10 +15,11 @@
     <?php
 
     /**
-     * @return array
-     * @throws Exception
+     * @param $chemin string Chemin du fichier
+     * @return array Un tableau contenant un sous tableau pour chaque ligne du fichier
+     * @throws Exception Si le fichier n'existe pas
      */
-    function getTabFromFile($chemin)
+    function getTabFromFile(string $chemin): array
     {
         $nomFichierTypes = $chemin;
         if (!file_exists($nomFichierTypes)) throw new Exception('Fichier ' . $nomFichierTypes . ' non trouvé.');
@@ -33,19 +34,21 @@
         return $tab;
     }
 
-    function tabToAssoc(array $tabTypeEcriture)
+    function tabToAssoc(array $tabTypeEcriture): array
     {
-        $tabTypeEcritureAssco = array();
+        $tabTypeEcritureAssoc = array();
         foreach ($tabTypeEcriture as $ligne) {
-            $tabTypeEcritureAssco[$ligne[0]] = $ligne[1];
+            $tabTypeEcritureAssoc[$ligne[0]] = $ligne[1];
         }
-        return $tabTypeEcritureAssco;
+        return $tabTypeEcritureAssoc;
     }
 
     try {
         $tabEcriture = getTabFromFile("../FichiersDonnees/Ecritures.csv");
         $tabTypeEcriture = getTabFromFile("../FichiersDonnees/TypeEcritures.csv");
         $tabTypeEcritureAssoc = tabToAssoc($tabTypeEcriture);
+        $tabCodeType = array();
+
         $i = 0;
         foreach ($tabTypeEcriture as $ligne) {
             $tabCodeType[$i] = $ligne[0];
@@ -98,11 +101,11 @@
                             <tr>
                                 <th>Date</th>
                                 <th>
-                                    Type</br>
+                                    <label for="type">Type</label><br>
                                     <select name="type" id="type">
-
                                         <?php
                                         echo '<option value="Tous">Tous</option>';
+                                        //Création des options avec les types
                                         foreach ($tabTypeEcriture as $ligne) {
                                             if ($ligne != $tabTypeEcriture[0]) {
                                                 echo '<option value="' . $ligne[0] . '" ';
@@ -125,18 +128,19 @@
                             </tr>
                             <?php
                             $solde = 0;
-                            var_dump($tabEcriture);
-                            $resultat = ''-2;
-                            var_dump($resultat);
+                            //Affichage des lignes
                             foreach ($tabEcriture as $ligne) {
                                 if ($ligne != $tabEcriture[0] && ($typeFiltre == "Tous" || $typeFiltre == $ligne[1])) {
-                                    $solde += $ligne[4] - $ligne[3]; //Crédit
+                                    //Calcul du solde
+                                    if ($ligne[3] != '') $solde -= $ligne[3];
+                                    if ($ligne[4] != '') $solde += $ligne[4];
                                     echo '<tr>';
-                                    echo '<td>' . $ligne[0] . '</td>'; //Date
+                                    echo '<td>' . $ligne[0] . '</td>';                        //Date
                                     echo '<td>' . $tabTypeEcritureAssoc[$ligne[1]] . '</td>'; //Type
-                                    echo '<td>' . $ligne[2] . '</td>'; //Libellé
-                                    echo '<td class="negatif">' . $ligne[3] . '</td>'; //Débit
-                                    echo '<td class="positif">' . $ligne[4] . '</td>'; //Crédit
+                                    echo '<td>' . $ligne[2] . '</td>';                        //Libellé
+                                    echo '<td class="negatif">' . $ligne[3] . '</td>';        //Débit
+                                    echo '<td class="positif">' . $ligne[4] . '</td>';        //Crédit
+                                    //Si aucun filtre n'est sélectionné, on affiche le solde
                                     if ($typeFiltre == "Tous") {
                                         echo '<td class="';
                                         echo $solde < 0 ? "negatif" : "positif";
@@ -157,8 +161,8 @@
         echo '<div class="alert alert-info" role="alert">';
         echo '<h2>Maintenance</h2>';
         //DEBUG echo '<p>' . $e->getMessage() . '</p>';
-        echo '<p>La base de donnée est cours de maintenance.</p>';
-        echo '<p>Nous nous excusons pour la géne occasionner</p>';
+        echo '<p>La base de donn&eacute;e est cours de maintenance</p>';
+        echo '<p>Nous nous excusons pour la g&eacute;ne occasionner</p>';
         echo '</div>';
     }
     ?>

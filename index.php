@@ -1,16 +1,12 @@
 <?php
 include("fonction/fonction.php");
 
+
+
 try {
-    $loginCorrect = verifierLogin();
+    connexion();
+    $loginCorrect = false;
     $erreurServeur = false;
-    if ($loginCorrect) {
-        session_start();
-        $_SESSION['identifiant'] = $_POST['identifiant'];
-        $_SESSION['nom'] = getNomFrom($_POST['identifiant'], $_POST['mdp']);
-        header("Location: pages/comptes.php");
-        exit();
-    }
 } catch (Exception $e) {
     $erreurServeur = true;
 }
@@ -21,11 +17,14 @@ try {
         <meta charset="UTF-8">
         <!-- Feuille de style -->
         <link rel="stylesheet" href="css/style.css"/>
+
         <!-- bootstrap -->
         <link rel="stylesheet" href="framework/bootstrap-4.6.2-dist/css/bootstrap.css"/>
+
         <!-- fontawesome -->
         <link rel="stylesheet" href="framework/fontawesome-free-6.2.1-web/css/all.css"/>
         <script defer src="framework/fontawesome-free-6.2.1-web/js/all.js"></script>
+
         <title>IUT Bank</title>
     </head>
     <body>

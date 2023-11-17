@@ -25,6 +25,20 @@ function verifierLogin(): bool
 /**
  * @throws Exception
  */
+function connexion()
+{
+    if (verifierLogin()) {
+        session_start();
+        $_SESSION['identifiant'] = $_POST['identifiant'];
+        $_SESSION['nom'] = getNomFrom($_POST['identifiant'], $_POST['mdp']);
+        header("Location: pages/comptes.php");
+        exit();
+    }
+}
+
+/**
+ * @throws Exception
+ */
 function getNomFrom(string $identifiant, string $mdp): string
 {
     $tab = getTabFromFile('FichiersDonnees/Logins.csv');

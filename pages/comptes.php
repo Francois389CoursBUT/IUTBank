@@ -141,8 +141,9 @@ estConnecterSinonRetourIndex();
                         <!-- Bouton déconnexion -->
                         <div class="col-3 centrerVerticalement">
                             <form action="deconnexion.php" method="post">
-                                <div class="btn btn-danger btn-block boutonTexte" type="submit">D&eacute;connexion <i
-                                            class="fa-solid fa-circle-xmark"></i></div>
+                                <button type="submit" class="btn btn-danger btn-block boutonTexte">D&eacute;connexion <i
+                                            class="fa-solid fa-circle-xmark"></i></button>
+
                             </form>
                         </div>
 

@@ -42,7 +42,8 @@ label {
 }
 
 a {
-    color :#AF00EC
+    color :#AF00EC;
+    width: 100%;
 }
 
 a:hover {
@@ -93,6 +94,7 @@ table {
 
 .textLogo {
     margin-bottom: 0;
+    font-size: 1em;
 }
 
 .logoIUT {
@@ -120,4 +122,9 @@ img:hover {
 
 .positif {
     color: green;
+}
+
+/* AlignerHorizontalement(à)Droite */
+.AHDroite {
+    text-align: right !important;
 }

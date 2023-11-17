@@ -76,14 +76,14 @@
         <div class="col-12 cell">
             <div class="row">
                 <!-- Vide pour centrer -->
-                <div class="col-7"></div>
+                <div class="col-md-7 col-sm-6"></div>
 
                 <div class="col-3 centrerVerticalement">
                     <a href="../index.php">
                         <div class="btn btn-danger btn-block boutonTexte">Acceuil <i class="fa-solid fa-eject"></i></div>
                     </a>
                 </div>
-                <div class="col-2">
+                <div class="col-md-2 col-sm-3">
                     <div class="row">
                         <div class="col-12"><p class="textLogo">R&eacute;aliser par</p></div>
                         <div class="col-12 centrerHorizontalement"><img class="logoIUT" src="../img/LogoIut.png" alt="Le logo de l'IUT de Rodez"></div>

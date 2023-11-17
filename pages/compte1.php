@@ -1,3 +1,9 @@
+<?php
+//Vérifier si l'utilisateur est connecté
+session_start();
+include("../fonction/fonction.php");
+estConnecterSinonRetourIndex();
+?>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -12,83 +18,54 @@
         <title>IUT Bank - Détails du compte</title>
     </head>
     <body>
-    <?php
+    <div class="container">
+        <div class="row">
 
-    /**
-     * @param $chemin string Chemin du fichier
-     * @return array Un tableau contenant un sous tableau pour chaque ligne du fichier
-     * @throws Exception Si le fichier n'existe pas
-     */
-    function getTabFromFile(string $chemin): array
-    {
-        $nomFichierTypes = $chemin;
-        if (!file_exists($nomFichierTypes)) throw new Exception('Fichier ' . $nomFichierTypes . ' non trouvé.');
-
-        $tabTypes = file($nomFichierTypes, FILE_IGNORE_NEW_LINES);
-        $i = 0;
-        $tab = array();
-        foreach ($tabTypes as $ligne) {
-            $tab[$i] = explode(";", $ligne);
-            $i++;
-        }
-        return $tab;
-    }
-
-    function tabToAssoc(array $tabTypeEcriture): array
-    {
-        $tabTypeEcritureAssoc = array();
-        foreach ($tabTypeEcriture as $ligne) {
-            $tabTypeEcritureAssoc[$ligne[0]] = $ligne[1];
-        }
-        return $tabTypeEcritureAssoc;
-    }
-
-    try {
-        $tabEcriture = getTabFromFile("../FichiersDonnees/Ecritures.csv");
-        $tabTypeEcriture = getTabFromFile("../FichiersDonnees/TypeEcritures.csv");
-        $tabTypeEcritureAssoc = tabToAssoc($tabTypeEcriture);
-        $tabCodeType = array();
-
-        $i = 0;
-        foreach ($tabTypeEcriture as $ligne) {
-            $tabCodeType[$i] = $ligne[0];
-            $i++;
-        }
-        $typeFiltre = isset($_GET['type']) && in_array($_GET['type'], $tabCodeType) ? $_GET['type'] : "Tous";
-        ?>
-        <div class="container">
-            <div class="row">
-
-                <!-- En-tête -->
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12 enTete">
-                            <p><img src="../img/Logo.jpg" alt="Logo du site" class="logoSite"/></p>
-                        </div>
-                        <div class="col-md-8 col-sm-12 enTete">
-                            <h1>Ma Banque en ligne</h1>
-                            <h1>IUT BANK ONLINE</h1>
-                        </div>
+            <!-- En-tête -->
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 enTete">
+                        <p><img src="../img/Logo.jpg" alt="Logo du site" class="logoSite"/></p>
+                    </div>
+                    <div class="col-md-8 col-sm-12 enTete">
+                        <h1>Ma Banque en ligne</h1>
+                        <h1>IUT BANK ONLINE</h1>
                     </div>
                 </div>
+            </div>
 
-                <!-- Message de bienvenue -->
-                <div class="col-12 cell">
-                    <h1>-- Bienvenue M.Hubert Delaclasse --</h1>
-                    <h2>Vous pourrez gr&acirc;ce &agrave; cette interface voir les d&eacute;tails de vos comptes et
-                        faire
-                        toutes vos op&eacute;rations &agrave; distance</h2>
-                </div>
+            <!-- Message de bienvenue -->
+            <div class="col-12 cell">
+                <h1>-- Bienvenue M.Hubert Delaclasse --</h1>
+                <h2>Vous pourrez gr&acirc;ce &agrave; cette interface voir les d&eacute;tails de vos comptes et
+                    faire
+                    toutes vos op&eacute;rations &agrave; distance</h2>
+            </div>
 
+            <?php
+            try {
+
+                $tabEcriture = getTabFromFile("../FichiersDonnees/Ecritures.csv");
+                $tabTypeEcriture = getTabFromFile("../FichiersDonnees/TypeEcritures.csv");
+                $tabTypeEcritureAssoc = tabToAssoc($tabTypeEcriture);
+                $tabCodeType = array();
+
+                $i = 0;
+                foreach ($tabTypeEcriture as $ligne) {
+                    $tabCodeType[$i] = $ligne[0];
+                    $i++;
+                }
+                $typeFiltre = isset($_GET['type']) && in_array($_GET['type'], $tabCodeType) ? $_GET['type'] : "Tous";
+                ?>
                 <!-- Compte ouvert -->
                 <div class="col-12 cell">
                     <div class="row">
-                        <!-- Image TODO cacher lorsque xs -->
-                        <div class="col-md-3 col-sm-6 d-none d-md-block d-sm-block">
+                        <!-- Image -->
+                        <div class="col-md-3 d-none d-md-block d-sm-none">
                             <img class="imageCompte" src="../img/CompteCourant.jpg" alt="Image du compte courant">
                         </div>
                         <!-- Information -->
-                        <div class="col-md-6 col-sm-6 centrerVerticalement">
+                        <div class="col-md-6 col-sm-12 centrerVerticalement">
                             <h2>Compte No 123456789ABC - Type : Compte courant</h2>
                         </div>
                     </div>
@@ -97,7 +74,7 @@
                 <!-- Liste transaction -->
                 <div class="col-12 cell">
                     <form action="compte1.php" method="get">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-striped">
                             <tr>
                                 <th>Date</th>
                                 <th>
@@ -108,9 +85,7 @@
                                         //Création des options avec les types
                                         foreach ($tabTypeEcriture as $ligne) {
                                             if ($ligne != $tabTypeEcriture[0]) {
-                                                echo '<option value="' . $ligne[0] . '" ';
-                                                if ($ligne[0] == $typeFiltre) echo 'selected';
-                                                echo '>' . $ligne[1] . '</option>';
+                                                afficherOption($ligne[0], $ligne[1], $ligne[0] == $typeFiltre);
                                             }
                                         }
                                         ?>
@@ -132,17 +107,23 @@
                             foreach ($tabEcriture as $ligne) {
                                 if ($ligne != $tabEcriture[0] && ($typeFiltre == "Tous" || $typeFiltre == $ligne[1])) {
                                     //Calcul du solde
-                                    if ($ligne[3] != '') $solde -= $ligne[3];
-                                    if ($ligne[4] != '') $solde += $ligne[4];
+                                    if ($ligne[3] != '') {
+                                        $solde -= $ligne[3];
+                                        $ligne[3] = number_format((int)$ligne[3], 2, ',', ' ');
+                                    }
+                                    if ($ligne[4] != '') {
+                                        $solde += $ligne[4];
+                                        $ligne[4] = number_format((int)$ligne[4], 2, ',', ' ');
+                                    }
                                     echo '<tr>';
                                     echo '<td>' . $ligne[0] . '</td>';                        //Date
                                     echo '<td>' . $tabTypeEcritureAssoc[$ligne[1]] . '</td>'; //Type
                                     echo '<td>' . $ligne[2] . '</td>';                        //Libellé
-                                    echo '<td class="negatif">' . $ligne[3] . '</td>';        //Débit
-                                    echo '<td class="positif">' . $ligne[4] . '</td>';        //Crédit
+                                    echo '<td class="negatif AHDroite">' . $ligne[3] . '</td>';       //Débit
+                                    echo '<td class="positif AHDroite">' . $ligne[4] . '</td>';        //Crédit
                                     //Si aucun filtre n'est sélectionné, on affiche le solde
                                     if ($typeFiltre == "Tous") {
-                                        echo '<td class="';
+                                        echo '<td class="AHDroite ';
                                         echo $solde < 0 ? "negatif" : "positif";
                                         echo '">' . number_format($solde, 2, ',', ' ') . '</td>';
                                     }
@@ -153,19 +134,48 @@
                         </table>
                     </form>
                 </div>
+
+                <?php
+            } catch (Exception $e) {
+                // Affichage message d'erreur
+                echo '<div class="col-12 alert alert-info" role="alert">';
+                echo '<h2>Maintenance</h2>';
+                //DEBUG echo '<p>' . $e->getMessage() . '</p>';
+                echo '<p>La base de donn&eacute;e est cours de maintenance</p>';
+                echo '<p>Nous nous excusons pour la g&egrave;ne occasionner</p>';
+                echo '</div>';
+            }
+            ?>
+            <div class="col-12 cell cell-footer">
+                <div class="row">
+                    <div class="col-3 centrerVerticalement">
+                        <a href="contact.php">
+                            <div class="btn btn-primary btn-block boutonTexte">Nous contacter <i
+                                        class="fa-solid fa-envelope"></i></div>
+                        </a>
+                    </div>
+
+                    <div class="col-3"></div> <!-- Vide pour centrer -->
+
+                    <!-- Bouton déconnexion -->
+                    <div class="col-3 centrerVerticalement">
+                        <a href="deconnexion.php">
+                            <div class="btn btn-danger btn-block boutonTexte">D&eacute;connexion <i
+                                        class="fa-solid fa-circle-xmark"></i></div>
+                        </a>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="row">
+                            <div class="col-12"><p class="textLogo">R&eacute;aliser par</p></div>
+                            <div class="col-12 centrerHorizontalement"><img class="logoIUT" src="../img/LogoIut.png"
+                                                                            alt="Le logo de l'IUT de Rodez"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <?php
-    } catch (Exception $e) {
-        // Affichage message d'erreur
-        echo '<div class="alert alert-info" role="alert">';
-        echo '<h2>Maintenance</h2>';
-        //DEBUG echo '<p>' . $e->getMessage() . '</p>';
-        echo '<p>La base de donn&eacute;e est cours de maintenance</p>';
-        echo '<p>Nous nous excusons pour la g&eacute;ne occasionner</p>';
-        echo '</div>';
-    }
-    ?>
+    </div>
 
 
     </body>

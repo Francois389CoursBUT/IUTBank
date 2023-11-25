@@ -2,6 +2,7 @@
 //Vérifier si l'utilisateur est connecté
 session_start();
 include("../fonction/fonction.php");
+include("../fonction/functionDB.php");
 estConnecterSinonRetourIndex();
 ?>
 <!DOCTYPE html>
@@ -43,16 +44,58 @@ estConnecterSinonRetourIndex();
             </div>
 
             <?php
+            /**
+             * @param $ligne
+             * @param $solde
+             * @param $assocTypeEcriture
+             * @param $typeFiltre
+             * @return mixed
+             */
+            function affichageEntree(string $date, string $type, string $libelle,  $debit,  $credit)
+            {
+//Calcul du solde
+                global $assocTypeEcriture, $typeFiltre, $solde;
+
+
+                if ($debit != '') {
+                    $solde -= $debit;
+                    $debit = number_format((int)$debit, 2, ',', ' ');
+                }
+                if ($credit != '') {
+                    $solde += $credit;
+                    $credit = number_format((int)$credit, 2, ',', ' ');
+                }
+                echo '<tr>';
+                echo '<td>' . date("d/m/Y", strtotime($date)) . '</td>';                        //Date
+                echo '<td>' . $assocTypeEcriture[$type] . '</td>'; //Type
+                echo '<td>' . $libelle . '</td>';                        //Libellé
+                echo '<td class="negatif AHDroite">' . $debit . '</td>';       //Débit
+                echo '<td class="positif AHDroite">' . $credit . '</td>';        //Crédit
+                //Si aucun filtre n'est sélectionné, on affiche le solde
+                if ($typeFiltre == "Tous") {
+                    echo '<td class="AHDroite ';
+                    echo $solde < 0 ? "negatif" : "positif";
+                    echo '">' . number_format($solde, 2, ',', ' ') . '</td>';
+                }
+                echo '</tr>';
+            }
+
             try {
 
-                $tabEcriture = getTabFromFile("../FichiersDonnees/Ecritures.csv");
-                $tabTypeEcriture = getTabFromFile("../FichiersDonnees/TypeEcritures.csv");
-                $tabTypeEcritureAssoc = tabToAssoc($tabTypeEcriture);
-                $tabCodeType = array();
 
+
+                if (isset($_POST['numeroCompte'])) {
+                    $_SESSION['numeroCompte'] = $_POST['numeroCompte'];
+                }
+                $tabEcriture = getEcritureFromDB($_SESSION['numeroCompte']);
+                $tabTypeEcriture = getTypeEcritureFromDB();
+
+                $assocTypeEcriture = tabToAssoc($tabTypeEcriture);
+
+                $tabCodeType = array();
                 $i = 0;
                 foreach ($tabTypeEcriture as $ligne) {
-                    $tabCodeType[$i] = $ligne[0];
+                    $tabCodeType[$i] = $ligne['type'];
                     $i++;
                 }
                 $typeFiltre = isset($_GET['type']) && in_array($_GET['type'], $tabCodeType) ? $_GET['type'] : "Tous";
@@ -66,6 +109,7 @@ estConnecterSinonRetourIndex();
                         </div>
                         <!-- Information -->
                         <div class="col-md-6 col-sm-12 centrerVerticalement">
+                            <!-- TODO -->
                             <h2>Compte No 123456789ABC - Type : Compte courant</h2>
                         </div>
                     </div>
@@ -73,7 +117,7 @@ estConnecterSinonRetourIndex();
 
                 <!-- Liste transaction -->
                 <div class="col-12 cell">
-                    <form action="compte1.php" method="get">
+                    <form action="detailCompte.php" method="get">
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <th>Date</th>
@@ -84,9 +128,7 @@ estConnecterSinonRetourIndex();
                                         echo '<option value="Tous">Tous</option>';
                                         //Création des options avec les types
                                         foreach ($tabTypeEcriture as $ligne) {
-                                            if ($ligne != $tabTypeEcriture[0]) {
-                                                afficherOption($ligne[0], $ligne[1], $ligne[0] == $typeFiltre);
-                                            }
+                                            afficherOption($ligne['type'], $ligne['libelle'], $ligne['type'] == $typeFiltre);
                                         }
                                         ?>
                                     </select>
@@ -105,29 +147,8 @@ estConnecterSinonRetourIndex();
                             $solde = 0;
                             //Affichage des lignes
                             foreach ($tabEcriture as $ligne) {
-                                if ($ligne != $tabEcriture[0] && ($typeFiltre == "Tous" || $typeFiltre == $ligne[1])) {
-                                    //Calcul du solde
-                                    if ($ligne[3] != '') {
-                                        $solde -= $ligne[3];
-                                        $ligne[3] = number_format((int)$ligne[3], 2, ',', ' ');
-                                    }
-                                    if ($ligne[4] != '') {
-                                        $solde += $ligne[4];
-                                        $ligne[4] = number_format((int)$ligne[4], 2, ',', ' ');
-                                    }
-                                    echo '<tr>';
-                                    echo '<td>' . $ligne[0] . '</td>';                        //Date
-                                    echo '<td>' . $tabTypeEcritureAssoc[$ligne[1]] . '</td>'; //Type
-                                    echo '<td>' . $ligne[2] . '</td>';                        //Libellé
-                                    echo '<td class="negatif AHDroite">' . $ligne[3] . '</td>';       //Débit
-                                    echo '<td class="positif AHDroite">' . $ligne[4] . '</td>';        //Crédit
-                                    //Si aucun filtre n'est sélectionné, on affiche le solde
-                                    if ($typeFiltre == "Tous") {
-                                        echo '<td class="AHDroite ';
-                                        echo $solde < 0 ? "negatif" : "positif";
-                                        echo '">' . number_format($solde, 2, ',', ' ') . '</td>';
-                                    }
-                                    echo '</tr>';
+                                if ($typeFiltre == "Tous" || $typeFiltre == $ligne['type']) {
+                                    affichageEntree($ligne['laDate'], $ligne['type'], $ligne['libelle'], $ligne['montantDebit'], $ligne['montantCredit']);
                                 }
                             }
                             ?>

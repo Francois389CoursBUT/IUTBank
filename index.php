@@ -1,5 +1,6 @@
 <?php
 include("fonction/fonction.php");
+include("fonction/functionDB.php");
 
 
 
@@ -12,7 +13,7 @@ try {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <!-- Feuille de style -->

@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Vérifie si les identifiants de connexion sont corrects
  * @return bool
@@ -10,12 +12,15 @@ function verifierLogin(): bool
     if (isset($_POST['identifiant']) && isset($_POST['mdp'])) {
         $identifiant = htmlspecialchars($_POST['identifiant']);
         $mdp = htmlspecialchars($_POST['mdp']);
-        $tab = getTabFromFile('FichiersDonnees/Logins.csv');
-        foreach ($tab as $ligne) {
-            if ($ligne != $tab[0]) {
-                if ($ligne[0] == $identifiant && $ligne[1] == $mdp) {
-                    return true;
-                }
+
+        $tabUser = getUserFromDB();
+        foreach ($tabUser as $ligne) {
+            if ($ligne['login'] == $identifiant && $ligne['pwd'] == $mdp) {
+                session_start();
+                $_SESSION['identifiant'] = $identifiant;
+                $_SESSION['nom'] = $ligne['nom'];
+                $_SESSION['IdClient'] = $ligne['IdClient'];
+                return true;
             }
         }
     }
@@ -23,14 +28,15 @@ function verifierLogin(): bool
 }
 
 /**
+ * Connecte l'utilisateur si les identifiants sont corrects
+ * Renvoie vers la page comptes.php
  * @throws Exception
  */
 function connexion()
 {
     if (verifierLogin()) {
-        session_start();
-        $_SESSION['identifiant'] = $_POST['identifiant'];
-        $_SESSION['nom'] = getNomFrom($_POST['identifiant'], $_POST['mdp']);
+        $_GET['page'] = 'comptes';
+        var_dump("Connexion réussie");
         header("Location: pages/comptes.php");
         exit();
     }
@@ -84,14 +90,14 @@ function getTabFromFile(string $chemin): array
 
 /**
  * Transforme un tableau de tableau en tableau associatif
- * @param array $tabTypeEcriture : tableau à transformer
+ * @param array $tabTypeEcriture : tableau de tableau à transformer
  * @return array : tableau associatif
  */
 function tabToAssoc(array $tabTypeEcriture): array
 {
     $tabTypeEcritureAssoc = array();
     foreach ($tabTypeEcriture as $ligne) {
-        $tabTypeEcritureAssoc[$ligne[0]] = $ligne[1];
+        $tabTypeEcritureAssoc[$ligne['type']] = $ligne['libelle'];
     }
     return $tabTypeEcritureAssoc;
 }
@@ -109,3 +115,5 @@ function afficherOption(string $value, string $textDisplay, bool $isSelected = f
     if ($isSelected) echo ' selected';
     echo '>' . $textDisplay . '</option>';
 }
+
+

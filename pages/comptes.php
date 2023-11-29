@@ -1,7 +1,7 @@
 <?php
-//Vérifier si l'utilisateur est connecté
 session_start();
 include("../fonction/fonction.php");
+//Vérifier si l'utilisateur est connecté
 estConnecterSinonRetourIndex();
 include("../fonction/functionDB.php");
 ?>
@@ -43,7 +43,9 @@ include("../fonction/functionDB.php");
 
         echo '        <div class="col-12 centrerHorizontalement"> <!-- Bouton -->';
         echo '            <form action="detailCompte.php" method="post">';
-        echo '                <input hidden name="numeroCompte" value="' . $idCompte . '">';
+        echo '                <input hidden name="idCompte" value="' . $idCompte . '">';
+        echo '                <input hidden name="typeCompte" value="' . $typeCompte . '">';
+        echo '                <input hidden name="numeroCompte" value="' . $numeroCompte . '">';
         echo '                <button class="btn btn-primary boutonTexte" type="submit">D&eacute;tail du compte <i class="fa-solid fa-list"></i>';
         echo '                </button>';
         echo '            </form>';
@@ -100,6 +102,7 @@ include("../fonction/functionDB.php");
 
                 afficheCompte($compte['image'], $compte['NoCompte'], $compte['IdCompte'], $compte['libelle'], $solde);
             }
+
             ?>
 
 

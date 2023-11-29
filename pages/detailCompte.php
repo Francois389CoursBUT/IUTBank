@@ -84,14 +84,13 @@ estConnecterSinonRetourIndex();
 
 
 
-                if (isset($_POST['numeroCompte'])) {
-                    $_SESSION['numeroCompte'] = $_POST['numeroCompte'];
-                }
-                $tabEcriture = getEcritureFromDB($_SESSION['numeroCompte']);
+                if (isset($_POST['idCompte'])) $_SESSION['idCompte'] = $_POST['idCompte'];
+                if (isset($_POST['numeroCompte'])) $_SESSION['numeroCompte'] = $_POST['numeroCompte'];
+                if (isset($_POST['typeCompte'])) $_SESSION['typeCompte'] = $_POST['typeCompte'];
+
                 $tabTypeEcriture = getTypeEcritureFromDB();
 
                 $assocTypeEcriture = tabToAssoc($tabTypeEcriture);
-
                 $tabCodeType = array();
                 $i = 0;
                 foreach ($tabTypeEcriture as $ligne) {
@@ -99,6 +98,12 @@ estConnecterSinonRetourIndex();
                     $i++;
                 }
                 $typeFiltre = isset($_GET['type']) && in_array($_GET['type'], $tabCodeType) ? $_GET['type'] : "Tous";
+
+                $argumentTrie = isset($_GET['trie']) ? $_GET['trie'] : "";
+
+                $tabEcriture = getEcritureFromDB($_SESSION['idCompte'], $typeFiltre, $argumentTrie);
+                var_dump("POST");
+                var_dump($_POST);
                 ?>
                 <!-- Compte ouvert -->
                 <div class="col-12 cell">
@@ -109,8 +114,7 @@ estConnecterSinonRetourIndex();
                         </div>
                         <!-- Information -->
                         <div class="col-md-6 col-sm-12 centrerVerticalement">
-                            <!-- TODO -->
-                            <h2>Compte No 123456789ABC - Type : Compte courant</h2>
+                            <?php echo '<h2 > Compte No ' . $_SESSION['numeroCompte'] . ' - Type : ' . $_SESSION['typeCompte'] . ' </h2 >'; ?>
                         </div>
                     </div>
                 </div>
@@ -120,7 +124,11 @@ estConnecterSinonRetourIndex();
                     <form action="detailCompte.php" method="get">
                         <table class="table table-bordered table-striped">
                             <tr>
-                                <th>Date</th>
+                                <th>
+                                    <label>Date</label>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="date-asc"><i class="fa-solid fa-arrow-up-1-9"></i></button>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="date-desc"><i class="fa-solid fa-arrow-down-9-1"></i></button>
+                                </th>
                                 <th>
                                     <label for="type">Type</label><br>
                                     <select name="type" id="type">
@@ -134,9 +142,21 @@ estConnecterSinonRetourIndex();
                                     </select>
                                     <input class="btn btn-primary" type="submit" value="Filtrer">
                                 </th>
-                                <th>Libell&eacute;</th>
-                                <th>D&eacute;bit</th>
-                                <th>Cr&eacute;dit</th>
+                                <th>
+                                    <label>Libell&eacute;</label>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="libelle-asc"><i class="fa-solid fa-arrow-up-a-z"></i></button>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="libelle-desc"><i class="fa-solid fa-arrow-down-z-a"></i></button>
+                                </th>
+                                <th>
+                                    <label>D&eacute;bit</label>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="debit-asc"><i class="fa-solid fa-arrow-up-1-9"></i></button>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="debit-desc"><i class="fa-solid fa-arrow-down-9-1"></i></button>
+                                </th>
+                                <th>
+                                    <label>Cr&eacute;dit</label>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="credit-asc"><i class="fa-solid fa-arrow-up-1-9"></i></button>
+                                    <button name="trie" class="btn btn-primary" type="submit" value="credit-desc"><i class="fa-solid fa-arrow-down-9-1"></i></button>
+                                </th>
                                 <?php
                                 if ($typeFiltre == "Tous") {
                                     echo '<th>Solde</th>';
@@ -147,9 +167,7 @@ estConnecterSinonRetourIndex();
                             $solde = 0;
                             //Affichage des lignes
                             foreach ($tabEcriture as $ligne) {
-                                if ($typeFiltre == "Tous" || $typeFiltre == $ligne['type']) {
-                                    affichageEntree($ligne['laDate'], $ligne['type'], $ligne['libelle'], $ligne['montantDebit'], $ligne['montantCredit']);
-                                }
+                                affichageEntree($ligne['laDate'], $ligne['type'], $ligne['libelle'], $ligne['montantDebit'], $ligne['montantCredit']);
                             }
                             ?>
                         </table>
@@ -176,7 +194,13 @@ estConnecterSinonRetourIndex();
                         </a>
                     </div>
 
-                    <div class="col-3"></div> <!-- Vide pour centrer -->
+                    <!-- Bouton retour -->
+                    <div class="col-3 centrerVerticalement">
+                        <a href="comptes.php">
+                            <div class="btn btn-primary btn-block boutonTexte">Retour &agrave; la liste des comptes <i
+                                        class="fa-solid fa-arrow-left"></i></div>
+                        </a>
+                    </div>
 
                     <!-- Bouton déconnexion -->
                     <div class="col-3 centrerVerticalement">

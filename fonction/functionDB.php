@@ -21,16 +21,35 @@ function getPDO(): PDO
     return new PDO($dns, $user, $pwd, $options);
 }
 
-function getEcritureFromDB(string $indentifiant): array
+function getEcritureFromDB(string $indentifiant, string $categorieFiltre, string $trieColonne): array
 {
     $pdo = getPDO();
 
     $requete = "SELECT laDate, type, libelle, montantDebit, montantCredit
-                FROM ecritures
-                WHERE IdCompte = :IdCompte";
+                    FROM ecritures
+                    WHERE IdCompte = :IdCompte";
+    if ($categorieFiltre != "Tous") {
+        $requete = $requete .  " AND type = :type";
+    }
 
+    //switch
+    switch ($trieColonne) {
+        case "libelle-asc"; $requete = $requete . " ORDER BY libelle ASC"; break;
+        case "libelle-desc"; $requete = $requete . " ORDER BY libelle DESC"; break;
+        case "date-asc"; $requete = $requete . " ORDER BY laDate ASC"; break;
+        case "date-desc"; $requete = $requete . " ORDER BY laDate DESC"; break;
+        case "debit-asc"; $requete = $requete . " ORDER BY montantDebit ASC"; break;
+        case "debit-desc"; $requete = $requete . " ORDER BY montantDebit DESC"; break;
+        case "credit-asc"; $requete = $requete . " ORDER BY montantCredit ASC"; break;
+        case "credit-desc"; $requete = $requete . " ORDER BY montantCredit DESC"; break;
+    }
     $stmt = $pdo->prepare($requete);
-    $stmt->execute(['IdCompte' => $indentifiant]);
+
+    if ($categorieFiltre != "Tous") {
+        $stmt->execute(['IdCompte' => $indentifiant, 'type' => $categorieFiltre]);
+    } else {
+        $stmt->execute(['IdCompte' => $indentifiant]);
+    }
 
     return $stmt->fetchAll();
 }
@@ -38,6 +57,7 @@ function getEcritureFromDB(string $indentifiant): array
 
 function getTypeEcritureFromDB(): array
 {
+    //TODO une seule connection
     $pdo = getPDO();
 
     $requete = "SELECT *
